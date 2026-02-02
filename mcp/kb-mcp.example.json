@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/main/mcp-config.schema.json",
+  "mcpServers": {
+    "kb": {
+      "command": "npx",
+      "args": ["@leored/kb-mcp"],
+      "env": {
+        "KB_BASE_URL": "YOUR_KB_SERVICE_URL_HERE",
+        "KB_API_KEY": "YOUR_API_KEY_HERE"
+      }
+    }
+  }
+}

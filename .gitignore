@@ -1,0 +1,24 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temp files
+*.tmp
+*.bak
+*.backup
+
+# Backup directories created by upgrade script
+.kdd-backup-*/
+
+# Node modules (if any future npm integration)
+node_modules/
+
+# Test output
+coverage/
+.nyc_output/

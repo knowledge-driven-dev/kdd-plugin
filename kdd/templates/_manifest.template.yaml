@@ -1,0 +1,187 @@
+# =============================================================================
+# DOMAIN MANIFEST TEMPLATE v1.0
+# =============================================================================
+# Ubicación: specs/domains/{domain-name}/_manifest.yaml
+# Documentación: /kdd/docs/multi-domain.md
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# SECCIÓN: domain (requerida)
+# Metadatos del dominio
+# -----------------------------------------------------------------------------
+domain:
+  # Identificador único del dominio (requerido)
+  # Debe coincidir con el nombre de la carpeta
+  # Formato: kebab-case, sin espacios ni caracteres especiales
+  id: ${DOMAIN_ID}  # Ejemplo: sessions, auth, billing
+
+  # Nombre legible para humanos (requerido)
+  name: "${DOMAIN_NAME}"  # Ejemplo: "Sesiones Six Hats"
+
+  # Descripción del propósito y alcance del dominio (requerido)
+  # Usar pipe (|) para texto multilínea
+  description: |
+    ${DOMAIN_DESCRIPTION}
+
+  # Estado del dominio (requerido)
+  # - active: En uso activo
+  # - deprecated: En proceso de eliminación
+  # - experimental: En desarrollo, puede cambiar
+  # - frozen: Sin cambios permitidos
+  status: active
+
+  # Equipo responsable (opcional)
+  # Formato: @team-name o @username
+  # team: "@team-core"
+
+  # Versión del dominio (opcional)
+  # version: "1.0.0"
+
+  # Tags para categorización (opcional)
+  # tags:
+  #   - core-business
+  #   - ai-powered
+
+# -----------------------------------------------------------------------------
+# SECCIÓN: dependencies (opcional)
+# Dominios de los que este dominio depende
+# NOTA: Eliminar esta sección si el dominio es foundational (core)
+# -----------------------------------------------------------------------------
+dependencies:
+  # Dependencia requerida - el dominio no funciona sin ella
+  - domain: core
+    type: required  # required | optional | event-only
+    reason: "Descripción de por qué se necesita esta dependencia"
+    imports:
+      entities:
+        - Usuario
+        # - OtraEntidad
+      events:
+        - EVT-Ejemplo-Creado
+        # - EVT-Otro-Evento
+      # commands:
+      #   - CMD-Ejemplo
+      # queries:
+      #   - QRY-Ejemplo
+      # value-objects:
+      #   - MiValueObject
+
+  # Dependencia opcional - funcionalidad degradada sin ella
+  # - domain: billing
+  #   type: optional
+  #   reason: "Las sesiones pueden funcionar sin créditos en modo demo"
+  #   imports:
+  #     events:
+  #       - EVT-Credito-Consumido
+
+  # Dependencia event-only - solo escucha eventos
+  # - domain: notifications
+  #   type: event-only
+  #   reason: "Solo escuchamos para enviar notificaciones"
+  #   imports:
+  #     events:
+  #       - EVT-Algo-Ocurrido
+
+# -----------------------------------------------------------------------------
+# SECCIÓN: exports (opcional)
+# Artefactos que este dominio expone a otros dominios
+# Solo estos artefactos pueden ser referenciados externamente
+# -----------------------------------------------------------------------------
+exports:
+  entities:
+    - ${MAIN_ENTITY}
+    # - OtraEntidad
+
+  events:
+    - EVT-${MAIN_ENTITY}-Creado
+    - EVT-${MAIN_ENTITY}-Actualizado
+    # - EVT-Otro-Evento
+
+  commands:
+    - CMD-Crear${MAIN_ENTITY}
+    # - CMD-Otro
+
+  queries:
+    - QRY-Obtener${MAIN_ENTITY}
+    # - QRY-Listar${MAIN_ENTITY}s
+
+  # value-objects:
+  #   - MiValueObject
+
+# -----------------------------------------------------------------------------
+# SECCIÓN: context-map (opcional)
+# Posición del dominio en el mapa de contextos (DDD)
+# -----------------------------------------------------------------------------
+context-map:
+  # Dominios de los que este dominio consume (upstream)
+  upstream:
+    - core
+    # - billing
+
+  # Dominios que consumen de este (downstream)
+  downstream: []
+    # - analytics
+    # - reporting
+
+  # Tipo de relación con cada dominio (opcional, para documentación)
+  # relationships:
+  #   - domain: core
+  #     pattern: conformist  # conformist | anti-corruption-layer | shared-kernel |
+  #                          # customer-supplier | open-host-service | published-language
+  #   - domain: billing
+  #     pattern: anti-corruption-layer
+
+# -----------------------------------------------------------------------------
+# SECCIÓN: boundaries (opcional)
+# Define traducciones y adaptadores para conceptos externos
+# Implementa el patrón Anti-Corruption Layer
+# -----------------------------------------------------------------------------
+# boundaries:
+#   anti-corruption:
+#     - external: "billing::Credito"  # Concepto en dominio externo
+#       internal: CreditoDisponible   # Cómo lo nombramos internamente
+#       adapter: CreditoAdapter       # Clase/módulo que hace la traducción
+#       notes: "Solo nos interesa el balance, no los detalles de transacción"
+#
+#   shared-interfaces:
+#     - interface: Identifiable
+#       shared-with: [core, auth]
+#       file: "_shared/interfaces/Identifiable.ts"
+
+# -----------------------------------------------------------------------------
+# SECCIÓN: policies (opcional)
+# Políticas cross-cutting que aplican a este dominio
+# -----------------------------------------------------------------------------
+# policies:
+#   inherited:
+#     - XP-AUDIT-001
+#     - XP-LOGGING-001
+#
+#   local:
+#     - id: XP-${DOMAIN_ID_UPPER}-001
+#       name: "Nombre de la Política"
+#       description: "Descripción de la política local"
+#
+#   excluded:
+#     - id: XP-CACHE-001
+#       reason: "Este dominio requiere datos en tiempo real"
+
+# -----------------------------------------------------------------------------
+# SECCIÓN: technical (opcional)
+# Configuración técnica específica del dominio
+# -----------------------------------------------------------------------------
+# technical:
+#   module-path: "apps/api/src/domains/${DOMAIN_ID}"
+#
+#   database:
+#     schema: "${DOMAIN_ID}"
+#     migrations: "drizzle/${DOMAIN_ID}"
+#
+#   feature-flags:
+#     - name: "${DOMAIN_ID}.feature-name"
+#       default: true
+#
+#   observability:
+#     namespace: "sixhats.${DOMAIN_ID}"
+#     traces: true
+#     metrics: true
