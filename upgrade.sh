@@ -219,9 +219,49 @@ upgrade_templates() {
     fi
 }
 
+# Migrate v1 docs to v2 Diataxis structure
+migrate_v1_to_v2() {
+    local current_version=$(cat "$KDD_VERSION_FILE")
+
+    # Only run migration if upgrading from 1.x
+    if [[ "$current_version" == 1.* ]]; then
+        print_info "Migrating docs from v1 flat structure to v2 Diataxis..."
+
+        # Archive old flat docs if they exist
+        local old_docs=("kdd/docs/Introducción a KDD.md" "kdd/docs/convenciones-escritura.md"
+                        "kdd/docs/feature-discovery.md" "kdd/docs/graph.md"
+                        "kdd/docs/indice-entidades.md" "kdd/docs/multi-domain.md"
+                        "kdd/docs/validacion-especificaciones.md")
+
+        local has_old_docs=false
+        for f in "${old_docs[@]}"; do
+            if [ -f "$f" ]; then
+                has_old_docs=true
+                break
+            fi
+        done
+
+        if [ "$has_old_docs" = true ]; then
+            ensure_dir "kdd/docs/_archive/v1"
+            for f in "${old_docs[@]}"; do
+                if [ -f "$f" ]; then
+                    mv "$f" "kdd/docs/_archive/v1/"
+                fi
+            done
+            # Move old subdirs
+            [ -d "kdd/docs/layers" ] && mv "kdd/docs/layers" "kdd/docs/_archive/v1/"
+            [ -d "kdd/docs/v2" ] && mv "kdd/docs/v2" "kdd/docs/_archive/v1/"
+            print_success "Archived v1 docs to kdd/docs/_archive/v1/"
+        fi
+    fi
+}
+
 # Upgrade docs (always overwrite)
 upgrade_docs() {
     print_info "Upgrading documentation..."
+
+    # Run v1→v2 migration if needed
+    migrate_v1_to_v2
 
     # Update kdd.md
     if [ -f "$TEMP_DIR/kdd-plugin/kdd/kdd.md" ]; then
@@ -229,10 +269,10 @@ upgrade_docs() {
         print_success "Updated kdd/kdd.md"
     fi
 
-    # Update docs
+    # Update docs (preserves _archive)
     if [ -d "$TEMP_DIR/kdd-plugin/kdd/docs" ]; then
         cp -r "$TEMP_DIR/kdd-plugin/kdd/docs/"* "kdd/docs/"
-        print_success "Updated kdd/docs/"
+        print_success "Updated kdd/docs/ (Diataxis structure)"
     fi
 }
 

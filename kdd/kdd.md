@@ -138,9 +138,9 @@ draft → review → approved → deprecated
 | ----------------------------- | ----------------- | -------------------------------------- |
 | Secciones de contenido        | Español           | `## Declaración`, `## Flujo Principal` |
 | Nombres de secciones técnicas | Inglés (opcional) | `## Purpose`, `## Input`               |
-| Código y ejemplos             | Inglés            | `function createChallenge()`           |
+| Código y ejemplos             | Inglés            | `function createProyecto()`           |
 | IDs y prefijos                | Inglés            | `CMD-009`, `BR-SESION-001`             |
-| Contenido narrativo           | Español           | "El Usuario crea un Reto..."           |
+| Contenido narrativo           | Español           | "El Usuario crea un Proyecto..."           |
 
 > **Consistencia**: Dentro de un mismo archivo, mantener el idioma elegido para las secciones.
 
@@ -190,7 +190,7 @@ status: draft
 
 ```yaml
 ---
-id: BP-{TOPIC}-NNN       # Required, e.g., BP-CREDITO-001
+id: BP-{TOPIC}-NNN       # Required, e.g., BP-PUNTO-001
 kind: business-policy    # Required
 title: PolicyName        # Required
 entity: EntityName       # Optional: entidad principal afectada
@@ -204,7 +204,7 @@ status: draft
 
 ```yaml
 ---
-id: XP-{TOPIC}-NNN       # Required, e.g., XP-CREDITOS-001
+id: XP-{TOPIC}-NNN       # Required, e.g., XP-PUNTOS-001
 kind: cross-policy       # Required
 title: PolicyName        # Required
 status: draft
@@ -219,7 +219,7 @@ id: CMD-NNN              # Required, pattern: ^CMD-\d{3}$
 kind: command            # Required
 title: CommandName       # Required
 status: draft
-billable: false          # Optional: if true, applies XP-CREDITOS-001
+billable: false          # Optional: if true, applies XP-PUNTOS-001
 credit-cost: 0           # Optional: credits consumed (requires billable: true)
 tags: [core, destructive] # Optional: categorization tags
 ---
@@ -425,12 +425,12 @@ status: draft
 ## Wiki-Link Syntax
 
 ```markdown
-[[Reto]]                       # Link to entity
-[[Sesión|sesiones]]            # Link with display alias
-[[BR-RETO-001]]                # Link to rule
-[[CMD-001-CreateChallenge]]    # Link to command
-[[UC-001-CrearReto]]           # Link to use case
-[[XP-CREDITOS-001]]            # Link to cross-policy
+[[Proyecto]]                       # Link to entity
+[[Tarea|tareas]]            # Link with display alias
+[[BR-PROYECTO-001]]                # Link to rule
+[[CMD-001-CreateProyecto]]    # Link to command
+[[UC-001-CrearProyecto]]           # Link to use case
+[[XP-PUNTOS-001]]            # Link to cross-policy
 ```
 
 ---
@@ -439,15 +439,15 @@ status: draft
 
 ### Domain Entities in Text
 
-- **Always capitalize** domain entities: `El Usuario crea un Reto`
-- First mention → wiki-link: `[[Reto]]`
-- Plurals with alias: `[[Sesión|Sesiones]]`
-- In code → lowercase: `const reto = await createReto()`
+- **Always capitalize** domain entities: `El Usuario crea un Proyecto`
+- First mention → wiki-link: `[[Proyecto]]`
+- Plurals with alias: `[[Tarea|Tareas]]`
+- In code → lowercase: `const proyecto = await createProyecto()`
 
 ### File Names
 
-- Entities: `PascalCase.md` (e.g., `Persona Sintética.md`)
-- Everything else: Use prefix pattern (e.g., `CMD-001-CreateChallenge.md`)
+- Entities: `PascalCase.md` (e.g., `Miembro.md`)
+- Everything else: Use prefix pattern (e.g., `CMD-001-CreateProyecto.md`)
 
 ---
 

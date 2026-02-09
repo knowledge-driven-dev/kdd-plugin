@@ -10,12 +10,12 @@ paths:
 
 ## Nombrado de Archivo
 
-Patron: `EVT-Entidad-Accion.md`
+Patrón: `EVT-Entidad-Accion.md`
 
 Ejemplos:
 - `EVT-Proyecto-Creado.md`
-- `EVT-Tarea-Completada.md`
-- `EVT-Usuario-Registrado.md`
+- `EVT-Tarea-Iniciada.md`
+- `EVT-Sprint-Completada.md`
 
 ## Frontmatter Requerido
 
@@ -32,9 +32,9 @@ source: "[[Entidad]]"         # Entidad que emite el evento (opcional)
 # EVT-Entidad-Accion
 
 ## Description <!-- required -->
-- Que representa el evento
-- Cuando se emite
-- Por que es importante
+- Qué representa el evento
+- Cuándo se emite
+- Por qué es importante
 
 ## Emitter <!-- optional -->
 | Entity | Triggering action |
@@ -57,7 +57,7 @@ source: "[[Entidad]]"         # Entidad que emite el evento (opcional)
 
 ## Payload: Campos Comunes
 
-| Campo | Cuando incluir |
+| Campo | Cuándo incluir |
 |-------|----------------|
 | `entity_id` | Siempre |
 | `timestamp` | Siempre |
@@ -67,7 +67,7 @@ source: "[[Entidad]]"         # Entidad que emite el evento (opcional)
 
 ## Subscribers
 
-Documentar quien reacciona al evento:
+Documentar quién reacciona al evento:
 
 ```markdown
 ## Subscribers
@@ -75,8 +75,8 @@ Documentar quien reacciona al evento:
 | System/Process | Reaction |
 |----------------|----------|
 | UI | Actualiza la interfaz |
-| Notifications | Envia notificacion push |
-| Analytics | Registra metrica |
+| Notifications | Envía notificación push |
+| Analytics | Registra métrica |
 | [[PRC-001]] | Inicia proceso derivado |
 ```
 
@@ -88,7 +88,7 @@ Documentar quien reacciona al evento:
 | Event | Relationship |
 |-------|--------------|
 | [[EVT-Proyecto-Configurado]] | Evento que precede |
-| [[EVT-Tarea-Creada]] | Evento que puede seguir |
+| [[EVT-Tarea-Iniciada]] | Evento que puede seguir |
 | [[EVT-Proyecto-Cancelado]] | Evento inverso/compensatorio |
 ```
 
@@ -105,13 +105,13 @@ source: "[[Proyecto]]"
 ## Description
 
 Se emite cuando un [[Usuario]] crea un nuevo [[Proyecto]]. Marca el inicio
-del flujo de configuracion del Proyecto.
+del flujo de configuración del Proyecto.
 
 ## Emitter
 
 | Entity | Triggering action |
 |--------|-------------------|
-| [[Proyecto]] | Usuario completa formulario de creacion |
+| [[Proyecto]] | Usuario completa formulario de creación |
 
 ## Payload
 
@@ -119,8 +119,8 @@ del flujo de configuracion del Proyecto.
 |-------|------|-------------|
 | `proyecto_id` | uuid | ID del Proyecto creado |
 | `usuario_id` | uuid | ID del Usuario propietario |
-| `titulo` | string | Titulo del Proyecto |
-| `timestamp` | datetime | Momento de creacion |
+| `titulo` | string | Título del Proyecto |
+| `timestamp` | datetime | Momento de creación |
 
 ## Example
 
@@ -141,8 +141,8 @@ del flujo de configuracion del Proyecto.
 
 | System/Process | Reaction |
 |----------------|----------|
-| UI | Redirige a pantalla de configuracion |
-| Analytics | Registra evento de creacion |
+| UI | Redirige a pantalla de configuración |
+| Analytics | Registra evento de creación |
 
 ## Related Events
 

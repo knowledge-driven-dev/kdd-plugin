@@ -13,8 +13,8 @@ paths:
 ```
 specs/
 ├── _shared/                    # Elementos transversales
-│   ├── policies/               # XP-* Politicas cross-domain
-│   ├── glossary.md             # Terminos globales
+│   ├── policies/               # XP-* Políticas cross-domain
+│   ├── glossary.md             # Términos globales
 │   ├── domain-map.md           # Mapa de dominios
 │   └── nfr/                    # NFRs globales
 │
@@ -27,22 +27,22 @@ specs/
     │
     ├── auth/
     ├── billing/
-    └── projects/
+    └── sessions/
 ```
 
 ## Manifest de Dominio (`_manifest.yaml`)
 
-### Ubicacion
+### Ubicación
 
 `specs/domains/{domain-name}/_manifest.yaml`
 
-### Estructura Minima
+### Estructura Mínima
 
 ```yaml
 domain:
-  id: projects                  # Debe coincidir con carpeta
-  name: "Gestion de Proyectos"
-  description: "Gestion de proyectos y tareas"
+  id: sessions                  # Debe coincidir con carpeta
+  name: "Tareas TaskFlow"
+  description: "Gestión de tareas de pensamiento"
   status: active                # active|deprecated|experimental|frozen
 ```
 
@@ -50,35 +50,35 @@ domain:
 
 ```yaml
 domain:
-  id: projects
-  name: "Gestion de Proyectos"
+  id: sessions
+  name: "Tareas TaskFlow"
   description: |
-    Dominio principal. Gestiona el ciclo completo de proyectos
-    y tareas del equipo.
+    Dominio principal. Gestiona el ciclo completo de tareas
+    de pensamiento estructurado con miembros.
   status: active
   team: "@team-core"
   version: "1.0.0"
-  tags: [core-business, project-management]
+  tags: [core-business, taskflow]
 
 dependencies:
   - domain: core
     type: required              # required|optional|event-only
-    reason: "Usuarios son fundacionales"
+    reason: "Usuarios y Proyectos son fundacionales"
     imports:
-      entities: [Usuario]
-      events: [EVT-Usuario-Creado]
+      entities: [Usuario, Proyecto]
+      events: [EVT-Proyecto-Creado]
 
   - domain: billing
     type: optional
-    reason: "Funciona sin facturacion en modo free"
+    reason: "Funciona sin puntos en modo demo"
     imports:
-      events: [EVT-Pago-Completado]
+      events: [EVT-Credito-Consumido]
 
 exports:
-  entities: [Proyecto, Tarea, Equipo]
-  events: [EVT-Proyecto-Creado, EVT-Proyecto-Completado]
-  commands: [CMD-CrearProyecto]
-  queries: [QRY-ObtenerProyecto]
+  entities: [Tarea, Sprint, Idea]
+  events: [EVT-Tarea-Iniciada, EVT-Tarea-Completada]
+  commands: [CMD-IniciarTarea]
+  queries: [QRY-ObtenerTarea]
 
 context-map:
   upstream: [core, billing]
@@ -86,42 +86,42 @@ context-map:
 
 boundaries:
   anti-corruption:
-    - external: "billing::Factura"
-      internal: FacturaPendiente
-      notes: "Solo nos interesa el estado de pago"
+    - external: "billing::Credito"
+      internal: CreditoDisponible
+      notes: "Solo nos interesa el balance"
 ```
 
 ### Campos del Manifest
 
-| Seccion | Campo | Requerido | Descripcion |
+| Sección | Campo | Requerido | Descripción |
 |---------|-------|-----------|-------------|
-| `domain` | `id` | Si | Identificador (kebab-case) |
-| `domain` | `name` | Si | Nombre legible |
-| `domain` | `description` | Si | Proposito y alcance |
-| `domain` | `status` | Si | Estado del dominio |
+| `domain` | `id` | Sí | Identificador (kebab-case) |
+| `domain` | `name` | Sí | Nombre legible |
+| `domain` | `description` | Sí | Propósito y alcance |
+| `domain` | `status` | Sí | Estado del dominio |
 | `dependencies` | `domain` | - | ID del dominio dependencia |
 | `dependencies` | `type` | - | `required`, `optional`, `event-only` |
-| `exports` | - | - | Artefactos publicos |
+| `exports` | - | - | Artefactos públicos |
 
 ## Wiki-Links Cross-Domain
 
 ```markdown
-# Mismo dominio (busca local -> core)
-[[Proyecto]]
+# Mismo dominio (busca local → core)
+[[Tarea]]
 
-# Dominio explicito
+# Dominio explícito
 [[core::Usuario]]
-[[billing::Factura]]
+[[billing::Credito]]
 
 # Elemento compartido
 [[_shared::XP-AUDIT-001]]
 ```
 
-## Politicas Compartidas (`_shared/policies/`)
+## Políticas Compartidas (`_shared/policies/`)
 
 ### Nombrado
 
-Patron: `XP-NOMBRE-NNN.md` (Cross-Policy)
+Patrón: `XP-NOMBRE-NNN.md` (Cross-Policy)
 
 Ejemplos:
 - `XP-LOGGING-001.md`
@@ -134,12 +134,12 @@ Ejemplos:
 ---
 id: XP-LOGGING-001
 kind: cross-policy
-title: Politica de Logging
+title: Política de Logging
 scope: all-domains
 status: approved
 ---
 
-# XP-LOGGING-001: Politica de Logging
+# XP-LOGGING-001: Política de Logging
 
 ## Scope
 
@@ -158,7 +158,7 @@ Todo comando y query debe loguear entrada y salida con correlation ID.
 
 ## Compliance
 
-Verificado por: hook pre-commit, auditoria mensual
+Verificado por: hook pre-commit, auditoría mensual
 ```
 
 ## Domain Map (`_shared/domain-map.md`)
@@ -177,44 +177,44 @@ graph TD
     subgraph Business
         AUTH[auth]
         BILLING[billing]
-        PROJECTS[projects]
+        SESSIONS[sessions]
     end
 
     AUTH --> CORE
     BILLING --> CORE
-    PROJECTS --> CORE
-    PROJECTS -.-> BILLING
+    SESSIONS --> CORE
+    SESSIONS -.-> BILLING
 ```
 
 ## Matriz de Dependencias
 
 | Dominio | Depende de | Exporta a |
 |---------|------------|-----------|
-| core | - | auth, billing, projects |
-| auth | core | projects |
-| projects | core, billing | analytics |
+| core | - | auth, billing, sessions |
+| auth | core | sessions |
+| sessions | core, billing | analytics |
 ```
 
 ## Reglas de Dependencia
 
-| Regla | Descripcion |
+| Regla | Descripción |
 |-------|-------------|
-| Core fundacional | `core` no puede depender de ningun otro dominio |
-| Explicitas | Toda dependencia en `_manifest.yaml` |
-| Sin ciclos | A -> B -> A prohibido |
+| Core fundacional | `core` no puede depender de ningún otro dominio |
+| Explícitas | Toda dependencia en `_manifest.yaml` |
+| Sin ciclos | A → B → A prohibido |
 | Anti-corruption | Traducciones para conceptos externos |
 
 ## Niveles de Dominio
 
 ```
-+---------------------------------------------+
-|  LEAF (sin dependientes)                    |
-|  projects, analytics                        |
-+---------------------------------------------+
-|  MIDDLE (bidireccional)                     |
-|  auth, billing                              |
-+---------------------------------------------+
-|  CORE (fundacional)                         |
-|  core                                       |
-+---------------------------------------------+
+┌─────────────────────────────────────────────┐
+│  LEAF (sin dependientes)                    │
+│  sessions, analytics                        │
+├─────────────────────────────────────────────┤
+│  MIDDLE (bidireccional)                     │
+│  auth, billing                              │
+├─────────────────────────────────────────────┤
+│  CORE (fundacional)                         │
+│  core                                       │
+└─────────────────────────────────────────────┘
 ```

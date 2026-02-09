@@ -22,13 +22,19 @@ curl -fsSL https://raw.githubusercontent.com/leored/kdd-plugin/main/install.sh |
 ```
 your-project/
 ├── .claude/
-│   ├── rules/kdd-*.md      # 11 writing convention rules
+│   ├── rules/kdd-*.md      # 12 writing convention rules
 │   ├── skills/kdd-*/       # 7 interactive skills
 │   └── agents/             # Requirements analyst agent
 ├── kdd/
-│   ├── kdd.md              # Methodology reference
-│   ├── templates/          # 21 specification templates
-│   └── docs/               # Full documentation
+│   ├── kdd.md              # Methodology reference (agent context)
+│   ├── templates/          # 22 specification templates
+│   └── docs/               # Full documentation (Diataxis)
+│       ├── start/          # Getting started
+│       ├── guides/         # Role-based guides (PM, Dev, QA...)
+│       ├── tutorials/      # Step-by-step tutorials
+│       ├── reference/      # Artifact & naming reference
+│       ├── concepts/       # Deep explanations
+│       └── workflows/      # Common workflow recipes
 └── specs/                  # Your specifications go here
     ├── 00-requirements/
     ├── 01-domain/
@@ -110,9 +116,20 @@ The upgrade:
 
 ## Documentation
 
-- Quick reference: `kdd/kdd.md`
-- Full methodology: `kdd/docs/`
+Documentation follows the [Diataxis](https://diataxis.fr/) framework:
+
+| Section | Path | Purpose |
+|---------|------|---------|
+| Start | `kdd/docs/start/` | What is KDD, why use it |
+| Guides | `kdd/docs/guides/` | Role-specific how-to (PM, Dev, Designer, QA, Tech Lead) |
+| Tutorials | `kdd/docs/tutorials/` | Step-by-step learning |
+| Reference | `kdd/docs/reference/` | Artifacts, naming, frontmatter, layers |
+| Concepts | `kdd/docs/concepts/` | Deep explanations (traceability, knowledge graph) |
+| Workflows | `kdd/docs/workflows/` | Common task recipes (new feature, bug fix, etc.) |
+
+- Quick reference (for agents): `kdd/kdd.md`
 - Templates: `kdd/templates/`
+- Style guide: `kdd/docs/STYLE-GUIDE.md`
 
 ## Requirements
 

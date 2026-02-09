@@ -7,7 +7,7 @@
 id: PRC-NNN                   # @optional @pattern: ^(PRC|PROC)-\d{3}$
 kind: process                 # @required @literal: process
 status: draft                 # @enum: draft|proposed|approved|deprecated @default: draft
-domain: six-hats              # @optional
+domain: taskflow              # @optional
 ---
 
 # PRC-NNN: Process Name <!-- required pattern: ^(PRC|PROC)-\d{3}: -->

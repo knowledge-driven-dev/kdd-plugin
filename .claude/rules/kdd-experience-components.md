@@ -15,9 +15,9 @@ paths:
 
 ## Nombrado de Archivo
 
-| Tipo | Patron | Ejemplo |
+| Tipo | Patrón | Ejemplo |
 |------|--------|---------|
-| Componente | `UI-NombreComponente.md` | `UI-ProjectCard.md` |
+| Componente | `UI-NombreComponente.md` | `UI-ProyectoCard.md` |
 | Componente | `COMP-NombreComponente.md` | `COMP-Header.md` |
 | Modal | `MODAL-NombreModal.md` | `MODAL-ConfirmDelete.md` |
 
@@ -47,7 +47,7 @@ storybook:
 # NombreComponente
 
 ## Description
-Que es y proposito principal. Debe ser reutilizable.
+Qué es y propósito principal. Debe ser reutilizable.
 
 ## Props
 | Prop | Type | Required | Default | Description |
@@ -57,10 +57,10 @@ Que es y proposito principal. Debe ser reutilizable.
 
 ## Structure
 ```ascii
-+---------------------------------+
-|  [Icon]  Titulo                 |
-|          Subtitulo              |
-+---------------------------------+
+┌─────────────────────────────────┐
+│  [Icon]  Título                 │
+│          Subtítulo              │
+└─────────────────────────────────┘
 ```
 
 ## States
@@ -73,7 +73,7 @@ Que es y proposito principal. Debe ser reutilizable.
 ## Interactions
 ### Click principal
 - **Trigger**: Click en elemento
-- **Result**: Accion ejecutada
+- **Result**: Acción ejecutada
 - **Feedback**: Visual feedback
 
 ## Accessibility
@@ -92,7 +92,7 @@ Que es y proposito principal. Debe ser reutilizable.
 ### Styles
 - `default`, `outline`, `ghost`
 
-## shadcn/ui Dependencies
+## UI Library Dependencies
 - `Button`, `Card`, `Input`
 
 ## Usage Examples
@@ -107,7 +107,7 @@ Que es y proposito principal. Debe ser reutilizable.
 
 ```typescript
 // Entidades de dominio
-data: Proyecto | Tarea | Usuario
+data: Proyecto | Tarea | Persona
 
 // Callbacks
 onSave: () => void
@@ -128,46 +128,46 @@ size: 'sm' | 'md' | 'lg'
 ## Interactions: Formato
 
 ```markdown
-### Click en boton principal
+### Click en botón principal
 
 - **Trigger**: Click en `[Guardar]`
-- **Precondition**: Formulario valido
+- **Precondition**: Formulario válido
 - **Result**:
   - Ejecuta CMD-001
   - Actualiza estado
-- **Feedback**: Spinner -> Toast
+- **Feedback**: Spinner → Toast
 - **Emits**: `EVT-Proyecto-Creado`
-- **Opens**: `[[MODAL-Success]]` -> `Default`
+- **Opens**: `[[MODAL-Success]]` → `Default`
 ```
 
-| Campo | Cuando usar |
+| Campo | Cuándo usar |
 |-------|-------------|
 | Opens | Abre modal/drawer (overlay) |
-| Navigates to | Cambia de ruta/pagina |
+| Navigates to | Cambia de ruta/página |
 | Emits | Evento de dominio disparado |
 
 ## Estados: Wireframes
 
 ```ascii
 # Default
-+-----------------+
-|  Estado normal  |
-+-----------------+
+┌─────────────────┐
+│  Estado normal  │
+└─────────────────┘
 
 # Hover
-+-----------------+  <- shadow-lg
-|  Estado hover   |
-+-----------------+
+┌─────────────────┐  ← shadow-lg
+│  Estado hover   │
+└─────────────────┘
 
 # Disabled
-+-----------------+  <- opacity-50
-|  Deshabilitado  |
-+-----------------+
+┌─────────────────┐  ← opacity-50
+│  Deshabilitado  │
+└─────────────────┘
 
 # Loading
-+-----------------+
-|  O Cargando...  |
-+-----------------+
+┌─────────────────┐
+│  ◌ Cargando...  │
+└─────────────────┘
 ```
 
 ## Modales: Estructura Especial
@@ -176,30 +176,30 @@ size: 'sm' | 'md' | 'lg'
 # MODAL-NombreModal
 
 ## Description
-Proposito del modal.
+Propósito del modal.
 
 ## Trigger
-Que accion abre este modal.
+Qué acción abre este modal.
 
 ## Structure
 ```ascii
-+--------------------------------------+
-|  Titulo del Modal              [x]   |
-+--------------------------------------+
-|                                       |
-|  Contenido del modal                  |
-|                                       |
-+--------------------------------------+
-|  [Cancelar]           [Confirmar]    |
-+--------------------------------------+
+┌──────────────────────────────────────┐
+│  Título del Modal              [×]   │
+├──────────────────────────────────────┤
+│                                       │
+│  Contenido del modal                  │
+│                                       │
+├──────────────────────────────────────┤
+│  [Cancelar]           [Confirmar]    │
+└──────────────────────────────────────┘
 ```
 
 ## Actions
 | Action | Result |
 |--------|--------|
-| Confirmar | Ejecuta accion, cierra |
+| Confirmar | Ejecuta acción, cierra |
 | Cancelar | Cierra sin cambios |
-| Click fuera | Cierra (o no, segun contexto) |
+| Click fuera | Cierra (o no, según contexto) |
 ```
 
 ## Ejemplo Completo
@@ -217,12 +217,12 @@ storybook:
   auto-generate: true
 ---
 
-# UI-ProjectCard
+# UI-ProyectoCard
 
 ## Description
 
-Tarjeta que muestra resumen de un [[Proyecto]]: titulo, estado, y conteo de
-tareas. Clickeable para navegar al detalle.
+Tarjeta que muestra resumen de un [[Proyecto]]: título, estado, y conteo de
+Miembros. Clickeable para navegar al detalle.
 
 ## Props
 
@@ -234,11 +234,11 @@ tareas. Clickeable para navegar al detalle.
 ## Structure
 
 ```ascii
-+-------------------------------------+
-|  Titulo del Proyecto          [badge] |
-|  3 tareas · 2 miembros                |
-|  Creado hace 2 dias                   |
-+-------------------------------------+
+┌─────────────────────────────────────┐
+│  Título del Proyecto            [badge] │
+│  3 miembros · 2 tareas            │
+│  Creado hace 2 días                 │
+└─────────────────────────────────────┘
 ```
 
 ## States
@@ -247,13 +247,13 @@ tareas. Clickeable para navegar al detalle.
 Fondo blanco, borde sutil.
 
 ### Hover
-Elevacion (shadow-md), borde primario.
+Elevación (shadow-md), borde primario.
 
 ## Interactions
 
 ### Click en card
 - **Trigger**: Click en cualquier parte
-- **Navigates to**: `[[VIEW-ProjectDetail]]`
+- **Navigates to**: `[[VIEW-Proyecto]]`
 - **Data**: `{ proyectoId: proyecto.id }`
 
 ## Accessibility

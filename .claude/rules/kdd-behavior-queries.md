@@ -10,17 +10,17 @@ paths:
 
 ## Concepto
 
-Una **Query** es una operacion de **solo lectura** (CQRS).
+Una **Query** es una operación de **solo lectura** (CQRS).
 No modifica estado, solo recupera datos.
 
 ## Nombrado de Archivo
 
-Patron: `QRY-NNN-NombreDeLaQuery.md`
+Patrón: `QRY-NNN-NombreDeLaQuery.md`
 
 Ejemplos:
 - `QRY-001-ObtenerProyecto.md`
 - `QRY-002-ListarProyectosUsuario.md`
-- `QRY-003-BuscarTareas.md`
+- `QRY-003-BuscarSesiones.md`
 
 ## Frontmatter Requerido
 
@@ -41,7 +41,7 @@ status: draft                 # draft|review|approved|deprecated
 # QRY-NNN: NombreQuery
 
 ## Purpose
-Descripcion de que datos recupera y casos de uso principales.
+Descripción de qué datos recupera y casos de uso principales.
 
 ## Input
 | Parameter | Type | Required | Validation |
@@ -81,7 +81,7 @@ interface QueryResult {
 ## Sorting
 | Field | Default | Description |
 |-------|---------|-------------|
-| createdAt | desc | Por fecha creacion |
+| createdAt | desc | Por fecha creación |
 
 ## Pagination
 | Parameter | Type | Default | Max |
@@ -106,12 +106,12 @@ interface QueryResult {
 
 ## Tipos de Query
 
-| Tipo | Patron nombre | Retorna |
+| Tipo | Patrón nombre | Retorna |
 |------|---------------|---------|
 | Get single | `ObtenerX` | Un objeto o error |
 | List | `ListarX` | Array paginado |
 | Search | `BuscarX` | Array filtrado |
-| Count | `ContarX` | Numero |
+| Count | `ContarX` | Número |
 | Exists | `ExisteX` | Boolean |
 
 ## Output: Patrones Comunes
@@ -140,14 +140,14 @@ interface ListProyectosResult {
 }
 ```
 
-## Errores: Convencion de Codigos
+## Errores: Convención de Códigos
 
-Patron: `QRY-NNN-EXX`
+Patrón: `QRY-NNN-EXX`
 
 Errores comunes:
-- `QRY-XXX-E01` -> No encontrado
-- `QRY-XXX-E02` -> Sin autorizacion
-- `QRY-XXX-E03` -> Parametros invalidos
+- `QRY-XXX-E01` → No encontrado
+- `QRY-XXX-E02` → Sin autorización
+- `QRY-XXX-E03` → Parámetros inválidos
 
 ## Ejemplo Completo
 
@@ -180,8 +180,8 @@ interface ListProyectosResult {
     id: string
     titulo: string
     status: ProyectoStatus
-    tareasCount: number
-    miembrosCount: number
+    personasCount: number
+    sesionesCount: number
     createdAt: string
   }[]
   pagination: {
@@ -197,14 +197,14 @@ interface ListProyectosResult {
 
 | Filter | Type | Description |
 |--------|------|-------------|
-| status | enum | `borrador`, `activo`, `completado`, `archivado` |
+| status | enum | `borrador`, `preparado`, `en_analisis`, `terminado` |
 
 ## Sorting
 
 | Field | Default | Description |
 |-------|---------|-------------|
-| createdAt | desc | Mas recientes primero |
-| titulo | - | Alfabetico |
+| createdAt | desc | Más recientes primero |
+| titulo | - | Alfabético |
 
 ## Pagination
 
@@ -222,8 +222,8 @@ interface ListProyectosResult {
 
 | Code | Condition | Message |
 |------|-----------|---------|
-| QRY-002-E01 | No autenticado | "Debes iniciar sesion" |
-| QRY-002-E02 | Filtro invalido | "Estado no valido" |
+| QRY-002-E01 | No autenticado | "Debes iniciar sesión" |
+| QRY-002-E02 | Filtro inválido | "Estado no válido" |
 
 ## Performance
 

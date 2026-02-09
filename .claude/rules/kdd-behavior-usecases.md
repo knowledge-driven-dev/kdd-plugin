@@ -10,23 +10,23 @@ paths:
 
 ## Nombrado de Archivo
 
-Patron: `UC-NNN-Nombre-Descriptivo.md`
+Patrón: `UC-NNN-Nombre-Descriptivo.md`
 
 Ejemplos:
 - `UC-001-Crear-Proyecto.md`
-- `UC-012-Asignar-Tarea.md`
-- `UC-003-Configurar-Equipo.md`
+- `UC-012-Iniciar-Tarea.md`
+- `UC-003-Configurar-Miembros.md`
 
 ## Frontmatter Requerido
 
 ```yaml
 ---
-id: UC-NNN                    # Obligatorio, patron UC-\d{3}
+id: UC-NNN                    # Obligatorio, patrón UC-\d{3}
 kind: use-case                # Literal
-version: 1                    # Numero de version
+version: 1                    # Número de versión
 status: draft                 # draft|proposed|approved|deprecated
 actor: Usuario                # Actor principal
-domain: my-domain             # Dominio (opcional)
+domain: taskflow              # Dominio (opcional)
 ---
 ```
 
@@ -35,31 +35,31 @@ domain: my-domain             # Dominio (opcional)
 ### Secciones Obligatorias
 
 ```markdown
-# UC-NNN: Titulo del Caso de Uso
+# UC-NNN: Título del Caso de Uso
 
 ## Description
 Objetivo principal y valor que aporta.
 
 ## Actors
-- **Primary Actor**: [[Usuario]] - Rol y motivacion
+- **Primary Actor**: [[Usuario]] - Rol y motivación
 - **Secondary Actor**: Sistema (opcional)
 
 ## Preconditions
-1. Condicion que debe cumplirse antes de iniciar
+1. Condición que debe cumplirse antes de iniciar
 2. Estado inicial del sistema
 
 ## Main Flow (Happy Path)
-1. El Actor realiza la primera accion
+1. El Actor realiza la primera acción
 2. El Sistema responde
 3. El Sistema **valida** los datos
 4. El Sistema **persiste** los cambios
-5. El Sistema **emite** evento [[EVT-Algo-Ocurrio]]
-6. El Sistema muestra confirmacion
+5. El Sistema **emite** evento [[EVT-Algo-Ocurrió]]
+6. El Sistema muestra confirmación
 
 ## Postconditions
 
 ### On Success
-- Estado final tras exito
+- Estado final tras éxito
 - Entidades creadas/modificadas
 - Eventos emitidos
 
@@ -72,12 +72,12 @@ Objetivo principal y valor que aporta.
 
 ```markdown
 ## Triggers
-- Accion o evento que inicia el caso de uso
+- Acción o evento que inicia el caso de uso
 
 ## Extensions / Alternative Flows
 
-### 3a. Validacion falla
-1. El Sistema detecta datos invalidos
+### 3a. Validación falla
+1. El Sistema detecta datos inválidos
 2. El Sistema muestra mensaje de error
 3. Vuelve al paso 3
 
@@ -87,39 +87,39 @@ Objetivo principal y valor que aporta.
 3. Fin con error
 
 ## Minimal Guarantees
-- Garantias incluso si el caso falla
+- Garantías incluso si el caso falla
 
 ## Business Rules
 | Rule | Description |
 |------|-------------|
-| [[BR-PROYECTO-001]] | Descripcion breve |
+| [[BR-PROYECTO-001]] | Descripción breve |
 
 ## Events Emitted
 | Event | Description |
 |-------|-------------|
-| [[EVT-Proyecto-Creado]] | Cuando se emite |
+| [[EVT-Proyecto-Creado]] | Cuándo se emite |
 
 ## Test Scenarios
 | ID | Scenario | Expected |
 |----|----------|----------|
-| TC-001.1 | Descripcion | Resultado |
+| TC-001.1 | Descripción | Resultado |
 ```
 
 ## Convenciones del Main Flow
 
 ### Verbos del Sistema
 
-- **valida** -> comprobacion de datos
-- **persiste** -> guarda en BD
-- **emite** -> dispara evento
-- **notifica** -> envia notificacion
-- **calcula** -> logica de negocio
+- **valida** → comprobación de datos
+- **persiste** → guarda en BD
+- **emite** → dispara evento
+- **notifica** → envía notificación
+- **calcula** → lógica de negocio
 
 ### Formato de Pasos
 
 ```markdown
-1. El Usuario ingresa titulo y descripcion
-2. El Sistema **valida** que el titulo no este vacio
+1. El Usuario ingresa título y descripción
+2. El Sistema **valida** que el título no esté vacío
 3. El Sistema **persiste** el nuevo [[Proyecto]] con status `borrador`
 4. El Sistema **emite** [[EVT-Proyecto-Creado]]
 5. El Sistema muestra el Proyecto creado al Usuario
@@ -127,13 +127,13 @@ Objetivo principal y valor que aporta.
 
 ## Extensions: Nombrado
 
-Usar numero del paso + letra:
+Usar número del paso + letra:
 
 ```markdown
 ## Extensions
 
-### 2a. Titulo vacio
-### 2b. Titulo duplicado
+### 2a. Título vacío
+### 2b. Título duplicado
 ### 3a. Error de base de datos
 ### 4a. Usuario sin permisos
 ```
@@ -143,7 +143,7 @@ Usar numero del paso + letra:
 ```markdown
 ### On Success
 
-- El [[Proyecto]] esta creado con status `borrador`
+- El [[Proyecto]] está creado con status `borrador`
 - El [[Usuario]] es propietario del Proyecto
 
 **Entidades afectadas:**
@@ -169,34 +169,35 @@ actor: Usuario
 
 ## Description
 
-Permite al Usuario crear un nuevo Proyecto para organizar su trabajo.
+Permite al Usuario crear un nuevo Proyecto para analizar un problema
+usando el método de análisis.
 
 ## Actors
 
-- **Primary Actor**: [[Usuario]] - Quiere organizar su trabajo
+- **Primary Actor**: [[Usuario]] - Quiere estructurar su pensamiento
 
 ## Preconditions
 
-1. El Usuario esta autenticado
-2. El Usuario tiene permisos de creacion
+1. El Usuario está autenticado
+2. El Usuario tiene puntos disponibles
 
 ## Main Flow (Happy Path)
 
 1. El Usuario selecciona "Nuevo Proyecto"
-2. El Usuario ingresa titulo y descripcion
+2. El Usuario ingresa título y descripción
 3. El Sistema **valida** los datos
 4. El Sistema **persiste** el [[Proyecto]] con status `borrador`
 5. El Sistema **emite** [[EVT-Proyecto-Creado]]
-6. El Sistema redirige al Usuario a configuracion del Proyecto
+6. El Sistema redirige al Usuario a configuración del Proyecto
 
 ## Extensions
 
-### 3a. Titulo vacio
-1. El Sistema muestra error "El titulo es obligatorio"
+### 3a. Título vacío
+1. El Sistema muestra error "El título es obligatorio"
 2. Vuelve al paso 2
 
-### 3b. Titulo excede 200 caracteres
-1. El Sistema muestra error "Maximo 200 caracteres"
+### 3b. Título excede 200 caracteres
+1. El Sistema muestra error "Máximo 200 caracteres"
 2. Vuelve al paso 2
 
 ## Postconditions
@@ -206,14 +207,15 @@ Permite al Usuario crear un nuevo Proyecto para organizar su trabajo.
 - El [[Usuario]] es propietario del Proyecto
 
 ### On Failure
-- No se crea ningun Proyecto
-- No se emite ningun evento
+- No se crea ningún Proyecto
+- No se emite ningún evento
 
 ## Business Rules
 
 | Rule | Description |
 |------|-------------|
-| [[BR-PROYECTO-001]] | El titulo debe tener entre 1 y 200 caracteres |
+| [[BR-PROYECTO-001]] | El título debe tener entre 1 y 200 caracteres |
+| [[BR-PROYECTO-002]] | El Usuario debe tener al menos 1 punto |
 
 ## Events Emitted
 

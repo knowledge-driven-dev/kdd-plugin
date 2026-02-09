@@ -1,6 +1,6 @@
 ---
 # @type: value-unit
-# @description: Value Unit (end-to-end delivery)
+# @description: Value Unit (end-to-end delivery with implementation tracking)
 id: UV-NNN            # @required @pattern: ^UV-\d{3}$
 kind: value-unit      # @required @literal: value-unit
 title: Nombre de la unidad   # @required
@@ -16,7 +16,24 @@ tags:                # @type: array
 ## Objective <!-- required -->
 
 ## Scope (end-to-end) <!-- required -->
-<!-- expects: list -->
+
+### Implemented
+<!-- Items already coded and working. Mark with [x] -->
+- [x] [[CMD-XXX-Example]] — Breve nota de qué incluye (API + UI + tests)
+
+### Pending — Iteration: {nombre de la iteración}
+<!-- Items to implement next. Mark with [ ]. Each references a spec file -->
+- [ ] [[CMD-YYY-NewFeature]] — **New**. Descripción breve
+- [ ] [[UI-Component]] vN.N — **Update**. Qué cambia
+
+### Out of scope (deferred)
+<!-- Items explicitly postponed. Use ~~strikethrough~~ -->
+- ~~[[CMD-ZZZ-Deferred]]~~ — Razón del aplazamiento
+
+### Cross-references
+<!-- Use cases, requirements and other transversal specs -->
+- [[UC-NNN-UseCaseName]]
+- [[REQ-NNN-RequirementName]]
 
 ## Inputs <!-- required -->
 <!-- expects: list -->
@@ -25,6 +42,12 @@ tags:                # @type: array
 <!-- expects: list -->
 
 ## Exit Criteria <!-- required -->
+
+### Already validated
+- [x] Criterio ya cumplido
+
+### Pending (iteration: {nombre})
+- [ ] Criterio pendiente de validar
 
 ## Risks / Dependencies <!-- optional -->
 

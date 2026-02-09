@@ -57,6 +57,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All examples have been generalized to remove project-specific references
 - Templates and rules are designed to be language/framework agnostic
 
+## [2.0.0] - 2026-02-09
+
+### Added
+
+- **Diataxis documentation structure** — Complete rewrite of `kdd/docs/`:
+  - `start/` — What is KDD, why use it (2 files)
+  - `guides/` — Role-specific guides for PM, Dev, Designer, QA, Tech Lead (5 files)
+  - `tutorials/` — Step-by-step tutorials: first objective, use case, command, UI spec, spec-to-test (5 files)
+  - `reference/` — Artifacts, cheatsheet, frontmatter, layers, naming, pipeline, status lifecycle, templates, tooling (9 files)
+  - `concepts/` — Deep explanations: docs-as-code, knowledge graph, layers, traceability (4 files)
+  - `workflows/` — Common recipes: adopt KDD, new feature, bug fix, change requirement, review specs (5 files)
+  - `STYLE-GUIDE.md` — Writing conventions following Google Tech Writing + EARS
+  - `faq.md` — Frequently asked questions
+- **New rule**: `kdd-value-units.md` — Tracking implementation progress with Value Units
+- **New template**: `value-unit.template.md` (updated with implementation tracking sections)
+- **v1→v2 migration** in `upgrade.sh` — Automatically archives old flat docs when upgrading from 1.x
+
+### Changed
+
+- `kdd.md` — Updated agent reference to match v2 structure and conventions
+- All examples now use the generic "TaskFlow" domain (Proyecto, Tarea, Miembro, Sprint, Punto)
+- Documentation is now framework-agnostic (no tech stack assumptions)
+- Rule files updated with latest conventions from production usage
+- `README.md` — Updated to reflect Diataxis structure
+- `install.sh` — Now installs 12 rules and 22 templates
+
+### Removed
+
+- Old flat documentation structure (archived to `kdd/docs/_archive/v1-plugin/`)
+
 ## [Unreleased]
 
 ### Planned

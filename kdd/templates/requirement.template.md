@@ -8,7 +8,7 @@ id: REQ-NNN                   # @required @pattern: ^REQ-\d{3}$
 kind: requirement             # @required @literal: requirement
 status: draft                 # @enum: draft|proposed|approved|deprecated @default: draft
 source: UC-NNN                # @optional @pattern: ^UC-\d{3}$ @description: Source use case
-domain: six-hats              # @optional
+domain: taskflow              # @optional
 ---
 
 # EARS Requirements: Title <!-- required pattern: ^(EARS Requirements|Requisitos EARS): -->
