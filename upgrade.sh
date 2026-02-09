@@ -9,7 +9,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-REPO_URL="https://github.com/leored/kdd-plugin.git"
+REPO_URL="https://github.com/knowledge-driven-dev/kdd-plugin.git"
 TEMP_DIR=$(mktemp -d)
 KDD_VERSION_FILE=".kdd-version"
 BACKUP_DIR=".kdd-backup-$(date +%Y%m%d-%H%M%S)"
@@ -49,7 +49,7 @@ check_installation() {
         print_error "KDD is not installed in this project"
         echo ""
         echo "Run the installer first:"
-        echo "curl -fsSL https://raw.githubusercontent.com/leored/kdd-plugin/main/install.sh | bash"
+        echo "curl -fsSL https://raw.githubusercontent.com/knowledge-driven-dev/kdd-plugin/main/install.sh | bash"
         exit 1
     fi
 
@@ -74,7 +74,7 @@ clone_repo() {
 
 # Alternative download method using curl
 download_tarball() {
-    local TARBALL_URL="https://github.com/leored/kdd-plugin/archive/refs/heads/main.tar.gz"
+    local TARBALL_URL="https://github.com/knowledge-driven-dev/kdd-plugin/archive/refs/heads/main.tar.gz"
 
     if command -v curl &> /dev/null; then
         curl -sL "$TARBALL_URL" | tar xz -C "$TEMP_DIR"
@@ -154,6 +154,12 @@ create_backup() {
     if [ -d "kdd" ]; then
         mkdir -p "$BACKUP_DIR/kdd"
         cp -r kdd/* "$BACKUP_DIR/kdd/" 2>/dev/null || true
+    fi
+
+    # Backup scripts
+    if [ -d "scripts" ]; then
+        mkdir -p "$BACKUP_DIR/scripts"
+        cp -r scripts/* "$BACKUP_DIR/scripts/" 2>/dev/null || true
     fi
 
     print_success "Backup created in $BACKUP_DIR"
@@ -256,6 +262,25 @@ migrate_v1_to_v2() {
     fi
 }
 
+# Upgrade scripts (always overwrite)
+upgrade_scripts() {
+    print_info "Upgrading scripts..."
+
+    if [ -d "$TEMP_DIR/kdd-plugin/scripts" ]; then
+        cp -r "$TEMP_DIR/kdd-plugin/scripts/"* "scripts/"
+        local count=$(find "scripts" -name "*.ts" | wc -l)
+        print_success "Updated $count scripts"
+    fi
+
+    # Do NOT overwrite kdd.config.ts (user customizations)
+    if [ ! -f "kdd.config.ts" ]; then
+        cp "$TEMP_DIR/kdd-plugin/kdd.config.ts" "kdd.config.ts"
+        print_success "Created kdd.config.ts (new in this version)"
+    else
+        print_warning "kdd.config.ts preserved (user customizations)"
+    fi
+}
+
 # Upgrade docs (always overwrite)
 upgrade_docs() {
     print_info "Upgrading documentation..."
@@ -295,9 +320,11 @@ print_summary() {
     echo "  - Claude skills (replaced)"
     echo "  - KDD templates (overwritten)"
     echo "  - KDD documentation (overwritten)"
+    echo "  - Automation scripts (overwritten)"
     echo ""
     echo "What was NOT touched:"
     echo "  - /specs directory (your specifications)"
+    echo "  - kdd.config.ts (your project configuration)"
     echo ""
     echo "Backup location: $BACKUP_DIR"
     echo ""
@@ -327,6 +354,7 @@ main() {
     upgrade_agents
     upgrade_skills
     upgrade_templates
+    upgrade_scripts
     upgrade_docs
     update_version
 

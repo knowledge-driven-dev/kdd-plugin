@@ -9,7 +9,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-REPO_URL="https://github.com/leored/kdd-plugin.git"
+REPO_URL="https://github.com/knowledge-driven-dev/kdd-plugin.git"
 TEMP_DIR=$(mktemp -d)
 KDD_VERSION_FILE=".kdd-version"
 
@@ -76,7 +76,7 @@ clone_repo() {
 
 # Alternative download method using curl
 download_tarball() {
-    local TARBALL_URL="https://github.com/leored/kdd-plugin/archive/refs/heads/main.tar.gz"
+    local TARBALL_URL="https://github.com/knowledge-driven-dev/kdd-plugin/archive/refs/heads/main.tar.gz"
 
     if command -v curl &> /dev/null; then
         curl -sL "$TARBALL_URL" | tar xz -C "$TEMP_DIR"
@@ -193,6 +193,26 @@ install_kdd_docs() {
     fi
 }
 
+# Install automation scripts
+install_scripts() {
+    print_info "Installing KDD automation scripts..."
+    ensure_dir "scripts"
+
+    cp -r "$TEMP_DIR/kdd-plugin/scripts/"* "scripts/"
+    local count=$(find "scripts" -name "*.ts" | wc -l)
+    print_success "Installed $count scripts"
+}
+
+# Install kdd.config.ts template
+install_config() {
+    if [ ! -f "kdd.config.ts" ]; then
+        cp "$TEMP_DIR/kdd-plugin/kdd.config.ts" "kdd.config.ts"
+        print_success "Created kdd.config.ts (customize for your project)"
+    else
+        print_warning "kdd.config.ts exists, skipping"
+    fi
+}
+
 # Create specs scaffold
 create_specs_scaffold() {
     print_info "Creating specs scaffold..."
@@ -256,11 +276,15 @@ print_next_steps() {
     echo "   - kdd/kdd.md - Quick reference"
     echo "   - kdd/docs/  - Full documentation"
     echo ""
-    echo "3. Start documenting:"
+    echo "3. Configure automation scripts:"
+    echo "   - Edit kdd.config.ts for your project paths"
+    echo "   - Add script entries to package.json (see README)"
+    echo ""
+    echo "4. Start documenting:"
     echo "   - Your specs go in /specs"
     echo "   - Use templates from kdd/templates/"
     echo ""
-    echo "For updates, run: curl -fsSL https://raw.githubusercontent.com/leored/kdd-plugin/main/upgrade.sh | bash"
+    echo "For updates, run: curl -fsSL https://raw.githubusercontent.com/knowledge-driven-dev/kdd-plugin/main/upgrade.sh | bash"
 }
 
 # Main installation
@@ -278,6 +302,8 @@ main() {
     install_agents
     install_skills
     install_kdd_docs
+    install_scripts
+    install_config
     create_specs_scaffold
     write_version
 
