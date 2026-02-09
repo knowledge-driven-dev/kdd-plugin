@@ -9,7 +9,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-REPO_URL="https://github.com/leored/kdd-plugin.git"
+REPO_URL="https://github.com/knowledge-driven-dev/kdd-plugin.git"
 TEMP_DIR=$(mktemp -d)
 KDD_VERSION_FILE=".kdd-version"
 BACKUP_DIR=".kdd-backup-$(date +%Y%m%d-%H%M%S)"
@@ -49,7 +49,7 @@ check_installation() {
         print_error "KDD is not installed in this project"
         echo ""
         echo "Run the installer first:"
-        echo "curl -fsSL https://raw.githubusercontent.com/leored/kdd-plugin/main/install.sh | bash"
+        echo "curl -fsSL https://raw.githubusercontent.com/knowledge-driven-dev/kdd-plugin/main/install.sh | bash"
         exit 1
     fi
 
@@ -74,7 +74,7 @@ clone_repo() {
 
 # Alternative download method using curl
 download_tarball() {
-    local TARBALL_URL="https://github.com/leored/kdd-plugin/archive/refs/heads/main.tar.gz"
+    local TARBALL_URL="https://github.com/knowledge-driven-dev/kdd-plugin/archive/refs/heads/main.tar.gz"
 
     if command -v curl &> /dev/null; then
         curl -sL "$TARBALL_URL" | tar xz -C "$TEMP_DIR"

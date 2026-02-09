@@ -9,7 +9,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-REPO_URL="https://github.com/leored/kdd-plugin.git"
+REPO_URL="https://github.com/knowledge-driven-dev/kdd-plugin.git"
 TEMP_DIR=$(mktemp -d)
 KDD_VERSION_FILE=".kdd-version"
 
@@ -76,7 +76,7 @@ clone_repo() {
 
 # Alternative download method using curl
 download_tarball() {
-    local TARBALL_URL="https://github.com/leored/kdd-plugin/archive/refs/heads/main.tar.gz"
+    local TARBALL_URL="https://github.com/knowledge-driven-dev/kdd-plugin/archive/refs/heads/main.tar.gz"
 
     if command -v curl &> /dev/null; then
         curl -sL "$TARBALL_URL" | tar xz -C "$TEMP_DIR"
@@ -260,7 +260,7 @@ print_next_steps() {
     echo "   - Your specs go in /specs"
     echo "   - Use templates from kdd/templates/"
     echo ""
-    echo "For updates, run: curl -fsSL https://raw.githubusercontent.com/leored/kdd-plugin/main/upgrade.sh | bash"
+    echo "For updates, run: curl -fsSL https://raw.githubusercontent.com/knowledge-driven-dev/kdd-plugin/main/upgrade.sh | bash"
 }
 
 # Main installation
