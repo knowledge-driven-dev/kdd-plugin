@@ -86,6 +86,13 @@ your-project/
 │       ├── reference/      # Artifact & naming reference
 │       ├── concepts/       # Deep explanations
 │       └── workflows/      # Common workflow recipes
+├── scripts/                # Automation scripts
+│   ├── lib/config.ts       # Shared config loader
+│   ├── spec-validator/     # Spec validation (17 files)
+│   ├── pipeline/           # 8-gate pipeline + scaffold (15 files)
+│   ├── verification/       # Test criteria extraction (4 files)
+│   ├── sync-specs.ts       # LightRAG knowledge hub sync
+│   └── detect-ui-spec-changes.ts
 ├── specs/                  # Your specifications go here
 │   ├── 00-requirements/
 │   ├── 01-domain/
@@ -93,7 +100,60 @@ your-project/
 │   ├── 03-experience/
 │   ├── 04-verification/
 │   └── 05-architecture/
+├── kdd.config.ts           # Project-specific configuration
 └── .kdd-version            # Installed version tracker
+```
+
+## Scripts & Automation
+
+KDD includes automation scripts for validating specs, running a pipeline, scaffolding code, and syncing with a knowledge hub.
+
+### What's included
+
+| Script | Command | Purpose |
+|--------|---------|---------|
+| **spec-validator** | `bun scripts/spec-validator/index.ts` | Validate spec frontmatter, structure, semantics |
+| **pipeline** | `bun scripts/pipeline/index.ts UV-001` | Run 8-gate quality pipeline for a Value Unit |
+| **scaffold** | `bun scripts/pipeline/scaffold.ts CMD-001` | Generate use-case stubs from CMD specs |
+| **code-mapping** | `bun scripts/pipeline/check-code-mapping.ts` | Check CMD-to-code file mapping |
+| **verification** | `bun scripts/verification/run-from-specs.ts` | Extract criteria and generate test stubs |
+| **sync-specs** | `bun scripts/sync-specs.ts` | Sync specs with LightRAG knowledge hub |
+| **detect-ui-changes** | `bun scripts/detect-ui-spec-changes.ts` | Detect modified UI specs in git staging |
+
+### Configuration
+
+After installation, edit `kdd.config.ts` in your project root:
+
+```typescript
+export default {
+  useCasesDir: 'src/application/use-cases',   // Where use-case files live
+  componentsDir: 'src/components/features',    // Where UI components live
+  entityNameMap: { /* 'Order': 'order' */ },   // PascalCase → code names
+  actionVerbMap: { /* 'Start': 'begin' */ },   // Action verb mappings
+  codeMapping: { /* 'create-order': 'CMD-001' */ },  // Filename → CMD ID
+}
+```
+
+### Suggested package.json scripts
+
+```json
+{
+  "scripts": {
+    "specs:validate": "bun scripts/spec-validator/index.ts specs/",
+    "specs:sync": "bun scripts/sync-specs.ts",
+    "pipeline:run": "bun scripts/pipeline/index.ts",
+    "pipeline:scaffold": "bun scripts/pipeline/scaffold.ts",
+    "pipeline:mapping": "bun scripts/pipeline/check-code-mapping.ts"
+  }
+}
+```
+
+### Dependencies
+
+The scripts require these npm packages:
+
+```bash
+bun add -d gray-matter unified remark-parse glob chalk
 ```
 
 ## Available Skills

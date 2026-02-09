@@ -73,6 +73,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **New rule**: `kdd-value-units.md` — Tracking implementation progress with Value Units
 - **New template**: `value-unit.template.md` (updated with implementation tracking sections)
 - **v1→v2 migration** in `upgrade.sh` — Automatically archives old flat docs when upgrading from 1.x
+- **KDD automation scripts** — 4 toolsets copied from production:
+  - `spec-validator/` — Validates spec frontmatter, structure, and semantics
+  - `pipeline/` — 8-gate quality pipeline, scaffold generator, code mapping checker
+  - `verification/` — Criteria extraction and test stub generation from specs
+  - `sync-specs.ts` — LightRAG knowledge hub synchronization
+  - `detect-ui-spec-changes.ts` — UI spec change detection in git staging
+- **`kdd.config.ts`** — Project-specific configuration template for paths and naming conventions
+- **`scripts/lib/config.ts`** — Shared config loader used by all scripts
 
 ### Changed
 
@@ -81,7 +89,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documentation is now framework-agnostic (no tech stack assumptions)
 - Rule files updated with latest conventions from production usage
 - `README.md` — Updated to reflect Diataxis structure
-- `install.sh` — Now installs 12 rules and 22 templates
+- `install.sh` — Now installs 12 rules, 22 templates, and automation scripts
+- `upgrade.sh` — Now upgrades scripts (preserves `kdd.config.ts` user customizations)
 
 ### Removed
 
@@ -91,6 +100,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Planned
 - npx installer for npm users
-- Validation script for specs
 - VS Code extension integration
 - GitHub Action for CI/CD checks

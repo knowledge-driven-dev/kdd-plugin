@@ -193,6 +193,26 @@ install_kdd_docs() {
     fi
 }
 
+# Install automation scripts
+install_scripts() {
+    print_info "Installing KDD automation scripts..."
+    ensure_dir "scripts"
+
+    cp -r "$TEMP_DIR/kdd-plugin/scripts/"* "scripts/"
+    local count=$(find "scripts" -name "*.ts" | wc -l)
+    print_success "Installed $count scripts"
+}
+
+# Install kdd.config.ts template
+install_config() {
+    if [ ! -f "kdd.config.ts" ]; then
+        cp "$TEMP_DIR/kdd-plugin/kdd.config.ts" "kdd.config.ts"
+        print_success "Created kdd.config.ts (customize for your project)"
+    else
+        print_warning "kdd.config.ts exists, skipping"
+    fi
+}
+
 # Create specs scaffold
 create_specs_scaffold() {
     print_info "Creating specs scaffold..."
@@ -256,7 +276,11 @@ print_next_steps() {
     echo "   - kdd/kdd.md - Quick reference"
     echo "   - kdd/docs/  - Full documentation"
     echo ""
-    echo "3. Start documenting:"
+    echo "3. Configure automation scripts:"
+    echo "   - Edit kdd.config.ts for your project paths"
+    echo "   - Add script entries to package.json (see README)"
+    echo ""
+    echo "4. Start documenting:"
     echo "   - Your specs go in /specs"
     echo "   - Use templates from kdd/templates/"
     echo ""
@@ -278,6 +302,8 @@ main() {
     install_agents
     install_skills
     install_kdd_docs
+    install_scripts
+    install_config
     create_specs_scaffold
     write_version
 
