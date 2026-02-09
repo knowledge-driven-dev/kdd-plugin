@@ -9,7 +9,7 @@ kind: use-case                # @required @literal: use-case
 version: 1                    # @type: number @default: 1
 status: draft                 # @enum: draft|proposed|approved|deprecated @default: draft
 actor: Primary Actor          # @required @description: Primary actor of the use case
-domain: six-hats              # @optional
+domain: taskflow              # @optional
 ---
 
 # UC-NNN: Use Case Title <!-- required pattern: ^UC-\d{3}:\s+.+ -->

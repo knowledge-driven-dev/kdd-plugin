@@ -15,7 +15,7 @@ paths:
 | `entity` | Entidad de dominio (Proyecto, Tarea, Plan) | `NombreEntidad.md` |
 | `role` | Rol de usuario (Propietario, Moderador) | `NombreRol.md` |
 | `actor` | Actor externo (Usuario, Administrador) | `NombreActor.md` |
-| `system` | Sistema externo | `ORACLE.md` (MAYUSCULAS) |
+| `system` | Sistema externo | `ORACLE.md` (MAYÚSCULAS) |
 
 ## Frontmatter Requerido
 
@@ -33,10 +33,10 @@ aliases:                      # Nombres alternativos (opcional)
 # Nombre Entidad
 
 ## Description <!-- required -->
-Descripcion clara. Incluir:
-- Proposito principal
+Descripción clara. Incluir:
+- Propósito principal
 - Relaciones con otras entidades (en prosa)
-- Caracteristicas distintivas
+- Características distintivas
 
 ### Examples <!-- optional -->
 Ejemplos concretos.
@@ -44,9 +44,9 @@ Ejemplos concretos.
 ## Attributes <!-- required -->
 | Attribute | Type | Description |
 |-----------|------|-------------|
-| `id` | uuid | Identificador unico |
+| `id` | uuid | Identificador único |
 | `status` | enum | Estado (ver [[#States]]) |
-| `created_at` | timestamp | Fecha creacion |
+| `created_at` | timestamp | Fecha creación |
 
 ## States <!-- si tiene ciclo de vida -->
 | State | ID | Description |
@@ -55,7 +55,7 @@ Ejemplos concretos.
 | **Activo** | `activo` | En uso |
 
 ### Transitions
-- **Borrador -> Activo**: Cuando se completa configuracion
+- **Borrador → Activo**: Cuando se completa configuración
 
 ## Lifecycle <!-- opcional, mermaid -->
 ## Invariants <!-- opcional -->
@@ -65,12 +65,12 @@ Ejemplos concretos.
 
 ```markdown
 # Correcto
-Cada Proyecto pertenece a un [[Usuario]] y contiene multiples
-[[Tarea|Tareas]].
+Cada Proyecto pertenece a un [[Usuario]] y contiene entre 3 y 6
+[[Miembro|Miembros]].
 
 # Incorrecto
 ## Relaciones
-| Relacion | Cardinalidad | Entidad |
+| Relación | Cardinalidad | Entidad |
 | pertenece a | N:1 | Usuario |
 ```
 
@@ -81,8 +81,8 @@ Cada Proyecto pertenece a un [[Usuario]] y contiene multiples
 
 | ID | Constraint |
 |----|------------|
-| INV-PROYECTO-001 | Un Proyecto debe tener al menos un miembro |
-| INV-PROYECTO-002 | El titulo no puede estar vacio |
+| INV-PROYECTO-001 | Un Proyecto debe tener entre 3 y 6 Miembros |
+| INV-PROYECTO-002 | El título no puede estar vacío |
 ```
 
 ## Ejemplo Completo
@@ -91,23 +91,23 @@ Cada Proyecto pertenece a un [[Usuario]] y contiene multiples
 ---
 kind: entity
 aliases:
-  - Project
+  - Proyecto
 ---
 
 # Proyecto
 
 ## Description
 
-Un Proyecto representa una iniciativa que el [[Usuario]] quiere
-gestionar. Cada Proyecto pertenece a un unico Usuario y puede
-contener multiples [[Tarea|Tareas]].
+Un Proyecto representa un problema o situación que el [[Usuario]] quiere
+analizar usando el el método de análisis. Cada Proyecto pertenece a
+un único Usuario y contiene entre 3 y 6 [[Miembro|Miembros]].
 
 ## Attributes
 
 | Attribute | Type | Description |
 |-----------|------|-------------|
-| `id` | uuid | Identificador unico |
-| `titulo` | string | Titulo descriptivo del proyecto |
+| `id` | uuid | Identificador único |
+| `titulo` | string | Título descriptivo del proyecto |
 | `descripcion` | text | Contexto y detalles |
 | `status` | enum | Estado (ver [[#States]]) |
 | `usuario_id` | uuid | [[Usuario]] propietario |
@@ -116,15 +116,15 @@ contener multiples [[Tarea|Tareas]].
 
 | State | ID | Description |
 |-------|----|-------------|
-| **Borrador** | `borrador` | En configuracion |
-| **Activo** | `activo` | En progreso |
-| **Completado** | `completado` | Finalizado |
-| **Archivado** | `archivado` | No activo |
+| **Borrador** | `borrador` | En configuración |
+| **Preparado** | `preparado` | Listo con 3-6 Personas |
+| **En Análisis** | `en_analisis` | Tarea iniciada |
+| **Terminado** | `terminado` | Límite alcanzado |
 
 ## Invariants
 
 | ID | Constraint |
 |----|------------|
-| INV-PROYECTO-001 | Debe tener titulo no vacio |
-| INV-PROYECTO-002 | El titulo no puede exceder 200 caracteres |
+| INV-PROYECTO-001 | Debe tener entre 3 y 6 Miembros |
+| INV-PROYECTO-002 | El título no puede exceder 200 caracteres |
 ```

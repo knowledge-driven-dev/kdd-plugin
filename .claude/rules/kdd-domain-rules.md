@@ -13,16 +13,16 @@ paths:
 | Tipo | Prefijo | Uso |
 |------|---------|-----|
 | Business Rule | `BR-` | Regla invariante, no configurable |
-| Business Policy | `BP-` | Politica configurable con parametros |
+| Business Policy | `BP-` | Política configurable con parámetros |
 
 ## Nombrado de Archivo
 
-Patron: `BR-ENTIDAD-NNN.md` o `BP-ENTIDAD-NNN.md`
+Patrón: `BR-ENTIDAD-NNN.md` o `BP-ENTIDAD-NNN.md`
 
 Ejemplos:
 - `BR-PROYECTO-001.md`
-- `BR-TAREA-003.md`
-- `BP-CREDITOS-001.md`
+- `BR-SESION-003.md`
+- `BP-PUNTOS-001.md`
 
 ## Frontmatter Requerido
 
@@ -30,7 +30,7 @@ Ejemplos:
 ---
 id: BR-ENTIDAD-NNN            # Obligatorio
 kind: business-rule           # business-rule | business-policy
-title: Titulo de la Regla     # Obligatorio
+title: Título de la Regla     # Obligatorio
 entity: NombreEntidad         # Entidad principal afectada
 category: validation          # validation|limit|state|security|business|policy|data
 severity: critical            # critical|high|medium|low
@@ -43,67 +43,67 @@ status: draft                 # draft|review|approved|deprecated
 ### Secciones Obligatorias
 
 ```markdown
-# BR-ENTIDAD-NNN: TituloDeLaRegla
+# BR-ENTIDAD-NNN: TítuloDeLaRegla
 
 ## Statement
-Descripcion clara en lenguaje natural, comprensible por stakeholders
-no tecnicos. Mencionar entidades con wiki-links: [[Entidad]].
+Descripción clara en lenguaje natural, comprensible por stakeholders
+no técnicos. Mencionar entidades con wiki-links: [[Entidad]].
 
 ## Rationale
-Razon de negocio. Explica el riesgo que previene o beneficio que protege.
+Razón de negocio. Explica el riesgo que previene o beneficio que protege.
 
 ## When Applies
-Puntos del ciclo de vida donde se evalua (crear, modificar, cambio de estado).
+Puntos del ciclo de vida donde se evalúa (crear, modificar, cambio de estado).
 
 ## Violation Behavior
-Resultado esperado cuando falla: error visible, operacion bloqueada, etc.
+Resultado esperado cuando falla: error visible, operación bloqueada, etc.
 
 ## Examples
 
 ### Valid Cases
-- Check Ejemplo de escenario valido
-- Check Otro escenario valido
+- ✓ Ejemplo de escenario válido
+- ✓ Otro escenario válido
 
 ### Invalid Cases
-- X Escenario invalido -> comportamiento esperado
-- X Otro escenario invalido -> comportamiento esperado
+- ✗ Escenario inválido → comportamiento esperado
+- ✗ Otro escenario inválido → comportamiento esperado
 ```
 
 ### Secciones Opcionales
 
 ```markdown
 ## Parameters (solo BP)
-Parametros configurables y valores por defecto.
+Parámetros configurables y valores por defecto.
 
 ## Formalization
-WHEN/IF [condicion],
-the system SHALL [accion]
-  AND SHALL NOT [prohibicion].
+WHEN/IF [condición],
+the system SHALL [acción]
+  AND SHALL NOT [prohibición].
 
 ## Implementation
 ## Notes
 ```
 
-## Categorias
+## Categorías
 
-| Categoria | Descripcion | Ejemplo |
+| Categoría | Descripción | Ejemplo |
 |-----------|-------------|---------|
-| `validation` | Validacion de datos | Titulo requerido |
-| `limit` | Limites numericos | Maximo 10 items |
+| `validation` | Validación de datos | Título requerido |
+| `limit` | Límites numéricos | Máximo 6 personas |
 | `state` | Transiciones de estado | Solo borrador puede editarse |
 | `security` | Seguridad/permisos | Solo propietario puede eliminar |
-| `business` | Logica de negocio | Creditos insuficientes |
-| `policy` | Politica configurable | Dias de retencion |
-| `data` | Integridad de datos | Referencias validas |
+| `business` | Lógica de negocio | Puntos insuficientes |
+| `policy` | Política configurable | Días de retención |
+| `data` | Integridad de datos | Referencias válidas |
 
 ## Severidad
 
-| Nivel | Cuando usar |
+| Nivel | Cuándo usar |
 |-------|-------------|
-| `critical` | Violacion causa corrupcion de datos o seguridad |
-| `high` | Violacion bloquea funcionalidad core |
-| `medium` | Violacion afecta experiencia pero hay workaround |
-| `low` | Violacion es cosmetica o menor |
+| `critical` | Violación causa corrupción de datos o seguridad |
+| `high` | Violación bloquea funcionalidad core |
+| `medium` | Violación afecta experiencia pero hay workaround |
+| `low` | Violación es cosmética o menor |
 
 ## Ejemplo Completo
 
@@ -111,49 +111,50 @@ the system SHALL [accion]
 ---
 id: BR-PROYECTO-001
 kind: business-rule
-title: Limite de Miembros por Proyecto
+title: Límite de Miembros
 entity: Proyecto
 category: limit
 severity: high
 status: approved
 ---
 
-# BR-PROYECTO-001: Limite de Miembros por Proyecto
+# BR-PROYECTO-001: Límite de Miembros
 
 ## Statement
 
-Un [[Proyecto]] debe tener entre 1 y 20 [[Usuario|miembros]]
-para poder estar activo.
+Un [[Proyecto]] debe tener entre 3 y 6 [[Miembro|Miembros]]
+para poder iniciar una [[Tarea]].
 
 ## Rationale
 
-Proyectos sin miembros no tienen sentido operativo. Mas de 20
-miembros hace la coordinacion inmanejable y afecta el rendimiento.
+El el método de análisis requiere diversidad de perspectivas para ser
+efectivo. Menos de 3 miembros no genera suficiente diversidad; más de 6
+hace las tareas inmanejables.
 
 ## When Applies
 
-- Al intentar cambiar estado de `borrador` a `activo`
-- Al intentar agregar un nuevo miembro
+- Al intentar cambiar estado de `borrador` a `preparado`
+- Al intentar iniciar una Tarea
 
 ## Violation Behavior
 
-El Sistema muestra error: "El Proyecto debe tener entre 1 y 20 miembros"
-y bloquea la operacion.
+El Sistema muestra error: "El Proyecto debe tener entre 3 y 6 Miembros"
+y bloquea la operación.
 
 ## Formalization
 
-WHEN the Usuario attempts to activate a Proyecto,
-IF the Proyecto has fewer than 1 or more than 20 members,
+WHEN the Usuario attempts to prepare a Proyecto,
+IF the Proyecto has fewer than 3 or more than 6 Miembros,
 the system SHALL reject the operation
   AND SHALL display error message.
 
 ## Examples
 
 ### Valid Cases
-- Check Proyecto con 1 miembro -> puede activarse
-- Check Proyecto con 20 miembros -> puede activarse
+- ✓ Proyecto con 3 Personas → puede prepararse
+- ✓ Proyecto con 6 Personas → puede prepararse
 
 ### Invalid Cases
-- X Proyecto con 0 miembros -> error "minimo 1 miembro"
-- X Proyecto con 21 miembros -> error "maximo 20 miembros"
+- ✗ Proyecto con 2 Personas → error "mínimo 3 miembros"
+- ✗ Proyecto con 7 Personas → error "máximo 6 personas"
 ```

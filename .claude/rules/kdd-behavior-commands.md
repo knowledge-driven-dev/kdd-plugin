@@ -10,17 +10,17 @@ paths:
 
 ## Concepto
 
-Un **Command** es una operacion que **modifica estado** en el sistema (CQRS).
+Un **Command** es una operación que **modifica estado** en el sistema (CQRS).
 Contrasta con Query que solo lee datos.
 
 ## Nombrado de Archivo
 
-Patron: `CMD-NNN-NombreDelComando.md`
+Patrón: `CMD-NNN-NombreDelComando.md`
 
 Ejemplos:
 - `CMD-001-CrearProyecto.md`
-- `CMD-002-AsignarTarea.md`
-- `CMD-003-CompletarItem.md`
+- `CMD-Miembros.md`
+- `CMD-003-IniciarTarea.md`
 
 ## Frontmatter Requerido
 
@@ -30,9 +30,9 @@ id: CMD-NNN                   # Obligatorio
 kind: command                 # Literal
 title: Nombre del Comando     # Obligatorio
 status: draft                 # draft|review|approved|deprecated
-billable: false               # Si consume creditos
-credit-cost: 0                # Creditos consumidos (si billable: true)
-tags: [core]                  # Categorizacion
+billable: false               # Si consume puntos
+credit-cost: 0                # Puntos consumidos (si billable: true)
+tags: [core]                  # Categorización
 ---
 ```
 
@@ -44,7 +44,7 @@ tags: [core]                  # Categorizacion
 # CMD-NNN: NombreComando
 
 ## Purpose
-Descripcion breve de que hace y por que existe.
+Descripción breve de qué hace y por qué existe.
 
 ## Input
 | Parameter | Type | Required | Validation |
@@ -58,14 +58,14 @@ Descripcion breve de que hace y por que existe.
 - Reglas de negocio satisfechas
 
 ## Postconditions
-- Cambios de estado tras ejecucion exitosa
+- Cambios de estado tras ejecución exitosa
 - Entidades creadas/modificadas/eliminadas
 - Efectos secundarios (emails, notificaciones)
 
 ## Possible Errors
 | Code | Condition | Message |
 |------|-----------|---------|
-| CMD-001-E01 | Titulo vacio | "El titulo es obligatorio" |
+| CMD-001-E01 | Título vacío | "El título es obligatorio" |
 | CMD-001-E02 | Sin permisos | "No tienes permiso" |
 ```
 
@@ -73,7 +73,7 @@ Descripcion breve de que hace y por que existe.
 
 ```markdown
 ## Rules Validated
-- [[BR-PROYECTO-001]] - Descripcion
+- [[BR-PROYECTO-001]] - Descripción
 
 ## Events Generated
 - [[EVT-Proyecto-Creado]] on success
@@ -82,7 +82,7 @@ Descripcion breve de que hace y por que existe.
 - [[UC-001-Crear-Proyecto]]
 
 ## State Transitions
-Proyecto [null] -> [borrador]
+Proyecto [null] → [borrador]
 
 ## Implementation Notes
 ## Performance Requirements
@@ -90,24 +90,24 @@ Proyecto [null] -> [borrador]
 
 ## Input: Validaciones Comunes
 
-| Tipo | Validacion tipica |
+| Tipo | Validación típica |
 |------|-------------------|
 | `string` | min/max length, pattern |
-| `UUID` | formato valido, entidad existe |
+| `UUID` | formato válido, entidad existe |
 | `enum` | valor permitido |
 | `number` | min/max, positivo |
 | `array` | min/max items |
 
-## Errores: Convencion de Codigos
+## Errores: Convención de Códigos
 
-Patron: `CMD-NNN-EXX`
+Patrón: `CMD-NNN-EXX`
 
-- `CMD-001-E01` -> Primer error del comando 001
-- `CMD-001-E02` -> Segundo error del comando 001
+- `CMD-001-E01` → Primer error del comando 001
+- `CMD-001-E02` → Segundo error del comando 001
 
 ## Comandos Billable
 
-Si el comando consume creditos:
+Si el comando consume puntos:
 
 ```yaml
 ---
@@ -119,13 +119,13 @@ credit-cost: 1
 Agregar en Preconditions:
 ```markdown
 ## Preconditions
-- Usuario tiene al menos {credit-cost} creditos disponibles
+- Usuario tiene al menos {credit-cost} puntos disponibles
 ```
 
 Y en Rules Validated:
 ```markdown
 ## Rules Validated
-- [[BP-CREDITOS-001]] - Verificacion de creditos
+- [[BP-PUNTOS-001]] - Verificación de puntos
 ```
 
 ## Ejemplo Completo
@@ -151,12 +151,12 @@ Crea un nuevo [[Proyecto]] en estado `borrador` para el [[Usuario]] actual.
 | Parameter | Type | Required | Validation |
 |-----------|------|----------|------------|
 | userId | UUID | Yes | Usuario autenticado |
-| titulo | string | Yes | 1-200 caracteres, no vacio |
-| descripcion | string | No | Maximo 2000 caracteres |
+| titulo | string | Yes | 1-200 caracteres, no vacío |
+| descripcion | string | No | Máximo 2000 caracteres |
 
 ## Preconditions
 
-- Usuario esta autenticado
+- Usuario está autenticado
 - Usuario tiene rol activo
 
 ## Postconditions
@@ -169,7 +169,7 @@ Crea un nuevo [[Proyecto]] en estado `borrador` para el [[Usuario]] actual.
 
 ## Rules Validated
 
-- [[BR-PROYECTO-002]] - Titulo no vacio
+- [[BR-PROYECTO-002]] - Título no vacío
 
 ## Events Generated
 
@@ -185,9 +185,9 @@ Crea un nuevo [[Proyecto]] en estado `borrador` para el [[Usuario]] actual.
 
 | Code | Condition | Message |
 |------|-----------|---------|
-| CMD-001-E01 | Titulo vacio | "El titulo es obligatorio" |
-| CMD-001-E02 | Titulo > 200 chars | "Maximo 200 caracteres" |
-| CMD-001-E03 | No autenticado | "Debes iniciar sesion" |
+| CMD-001-E01 | Título vacío | "El título es obligatorio" |
+| CMD-001-E02 | Título > 200 chars | "Máximo 200 caracteres" |
+| CMD-001-E03 | No autenticado | "Debes iniciar sesión" |
 
 ## Use Cases That Invoke It
 
@@ -195,5 +195,5 @@ Crea un nuevo [[Proyecto]] en estado `borrador` para el [[Usuario]] actual.
 
 ## State Transitions
 
-Proyecto: [null] -> [borrador]
+Proyecto: [null] → [borrador]
 ```

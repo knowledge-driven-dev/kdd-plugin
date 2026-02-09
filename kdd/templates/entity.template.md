@@ -15,7 +15,7 @@ aliases:                      # @type: array @optional @description: Alternative
 <!--
   VARIANTES POR KIND:
 
-  kind: entity  → Entidad de dominio estándar (Reto, Sesión, Plan)
+  kind: entity  → Entidad de dominio estándar (Proyecto, Tarea, Plan)
   kind: role    → Rol/actor que interactúa con el sistema (Propietario, Usuario, Moderador)
   kind: system  → Sistema externo en MAYÚSCULAS (ORACLE, SAP, STRIPE)
 

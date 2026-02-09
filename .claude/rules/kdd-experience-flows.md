@@ -10,12 +10,12 @@ paths:
 
 ## Nombrado de Archivo
 
-Patron: `FLOW-NombreDelFlujo.md`
+Patrón: `FLOW-NombreDelFlujo.md`
 
 Ejemplos:
 - `FLOW-Onboarding.md`
-- `FLOW-CreateProject.md`
-- `FLOW-ConfigureTeam.md`
+- `FLOW-CreateProyecto.md`
+- `FLOW-ConfigureSession.md`
 
 ## Frontmatter Requerido
 
@@ -42,7 +42,7 @@ storybook:
 # Flow: NombreDelFlujo
 
 ## Description
-Proceso completo que representa. Que objetivo logra el usuario?
+Proceso completo que representa. ¿Qué objetivo logra el usuario?
 
 ## Primary Actor
 - **User**: Tipo de usuario
@@ -52,10 +52,10 @@ Proceso completo que representa. Que objetivo logra el usuario?
 ```mermaid
 flowchart TD
     A[Inicio] --> B[Paso 1]
-    B --> C{Decision?}
-    C -->|Si| D[Paso 2a]
+    B --> C{Decisión?}
+    C -->|Sí| D[Paso 2a]
     C -->|No| E[Paso 2b]
-    D --> F[Fin: Exito]
+    D --> F[Fin: Éxito]
     E --> F
 ```
 
@@ -77,23 +77,23 @@ flowchart TD
 
 | Attribute | Value |
 |-----------|-------|
-| **View** | [[VIEW-NewProject]] |
-| **User Action** | Completa formulario con titulo y descripcion |
+| **View** | [[VIEW-NewProyecto]] |
+| **User Action** | Completa formulario con título y descripción |
 | **System Response** | Valida datos en tiempo real |
 | **Next Step** | Step 2 / Error |
 
 #### Step Wireframe
 
 ```ascii
-+--------------------------------------+
-|        Step 1: Datos basicos         |
-+--------------------------------------+
-|                                       |
-|   Titulo: [_________________________] |
-|   Descripcion: [____________________] |
-|                                       |
-|   [Cancelar]           [Continuar ->] |
-+--------------------------------------+
+┌──────────────────────────────────────┐
+│        Step 1: Datos básicos         │
+├──────────────────────────────────────┤
+│                                       │
+│   Título: [_________________________] │
+│   Descripción: [____________________] │
+│                                       │
+│   [Cancelar]           [Continuar →]  │
+└──────────────────────────────────────┘
 ```
 ```
 
@@ -102,20 +102,20 @@ flowchart TD
 ```markdown
 ## Decision Points
 
-### Decision 1: Tiene miembros configurados?
+### Decision 1: ¿Tiene personas configuradas?
 
 ```ascii
-        +-----------------+
-        |  miembros > 0?  |
-        +--------+--------+
-                 |
-        +--------+--------+
-        v                 v
+        ┌─────────────────┐
+        │  personas > 0?  │
+        └────────┬────────┘
+                 │
+        ┌────────┴────────┐
+        ▼                 ▼
    [Continuar]       [Configurar]
 ```
 
-- **If met**: Continua a Step 3
-- **If not met**: Redirige a configuracion de equipo
+- **If met**: Continúa a Step 3
+- **If not met**: Redirige a configuración de personas
 ```
 
 ## Terminal States: Formato
@@ -127,21 +127,21 @@ flowchart TD
 
 | Attribute | Value |
 |-----------|-------|
-| **Condition** | Usuario completo todos los pasos |
-| **Final State** | [[Proyecto]] creado con status `activo` |
-| **Redirect** | [[VIEW-ProjectDetail]] |
+| **Condition** | Usuario completó todos los pasos |
+| **Final State** | [[Proyecto]] creado con status `preparado` |
+| **Redirect** | [[VIEW-Proyecto]] |
 | **Feedback** | Toast "Proyecto creado exitosamente" |
 
 ```ascii
-+--------------------------------------+
-|          Check Completado            |
-+--------------------------------------+
-|                                       |
-|   Tu Proyecto ha sido creado.        |
-|                                       |
-|          [Ver Proyecto]              |
-|          [Crear otro]                |
-+--------------------------------------+
+┌──────────────────────────────────────┐
+│          ✓ Completado                │
+├──────────────────────────────────────┤
+│                                       │
+│   Tu Proyecto ha sido creado.            │
+│                                       │
+│          [Ver Proyecto]                  │
+│          [Crear otro]                │
+└──────────────────────────────────────┘
 ```
 
 ### Cancelled
@@ -159,7 +159,7 @@ flowchart TD
 |-----------|-------|
 | **Condition** | Error del sistema |
 | **Behavior** | Mostrar error, ofrecer retry |
-| **Feedback** | Toast con mensaje y opcion de reintentar |
+| **Feedback** | Toast con mensaje y opción de reintentar |
 ```
 
 ## Persistencia Durante el Flujo
@@ -169,7 +169,7 @@ flowchart TD
 
 | Strategy | Description |
 |----------|-------------|
-| **Local State** | React state para navegacion entre pasos |
+| **Local State** | React state para navegación entre pasos |
 | **LocalStorage** | Guarda borrador cada 30s |
 | **Backend** | Guarda como `draft` en BD al avanzar paso |
 ```
@@ -194,56 +194,56 @@ kind: ui-flow
 status: draft
 version: "1.0"
 links:
-  entities: [Proyecto, Tarea]
+  entities: [Proyecto, Miembro]
   use-cases: [UC-001, UC-002]
-  views: [VIEW-NewProject, VIEW-ConfigureProject]
+  views: [VIEW-NewProyecto, VIEW-ConfigureProyecto]
 ---
 
-# Flow: CreateProject
+# Flow: CreateProyecto
 
 ## Description
 
-Flujo completo para crear y configurar un [[Proyecto]], desde datos basicos
-hasta configuracion de [[Tarea|Tareas]] iniciales.
+Flujo completo para crear y configurar un [[Proyecto]], desde datos básicos
+hasta configuración de [[Miembro|Miembros]].
 
 ## Primary Actor
 
 - **User**: [[Usuario]] autenticado
-- **Preconditions**: Usuario tiene permisos de creacion
+- **Preconditions**: Usuario tiene puntos disponibles
 
 ## Flow Diagram
 
 ```mermaid
 flowchart TD
-    A[Inicio] --> B[Datos basicos]
-    B --> C[Configurar equipo]
-    C --> D{Miembros agregados?}
-    D -->|Si| E[Confirmar]
+    A[Inicio] --> B[Datos básicos]
+    B --> C[Configurar personas]
+    C --> D{3-6 personas?}
+    D -->|Sí| E[Confirmar]
     D -->|No| C
-    E --> F[Fin: Proyecto activo]
+    E --> F[Fin: Proyecto preparado]
 ```
 
 ## Flow Steps
 
-### Step 1: Datos Basicos
-| **View** | [[VIEW-NewProject]] |
-| **User Action** | Ingresa titulo y descripcion |
+### Step 1: Datos Básicos
+| **View** | [[VIEW-NewProyecto]] |
+| **User Action** | Ingresa título y descripción |
 | **Next Step** | Step 2 |
 
-### Step 2: Configurar Equipo
-| **View** | [[VIEW-ConfigureProject]] |
-| **User Action** | Agrega miembros al equipo |
-| **Next Step** | Step 3 (si valido) |
+### Step 2: Configurar Personas
+| **View** | [[VIEW-ConfigureProyecto]] |
+| **User Action** | Agrega 3-6 Miembros |
+| **Next Step** | Step 3 (si válido) |
 
 ### Step 3: Confirmar
-| **View** | [[VIEW-ConfigureProject]] |
+| **View** | [[VIEW-ConfigureProyecto]] |
 | **User Action** | Revisa y confirma |
 | **Next Step** | End: Success |
 
 ## Terminal States
 
 ### Success
-- **Final State**: Proyecto con status `activo`
-- **Redirect**: [[VIEW-ProjectDetail]]
-- **Events**: [[EVT-Proyecto-Creado]], [[EVT-Proyecto-Activado]]
+- **Final State**: Proyecto con status `preparado`
+- **Redirect**: [[VIEW-Proyecto]]
+- **Events**: [[EVT-Proyecto-Creado]], [[EVT-Proyecto-Preparado]]
 ```

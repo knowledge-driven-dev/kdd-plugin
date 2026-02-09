@@ -10,12 +10,12 @@ paths:
 
 ## Nombrado de Archivo
 
-Patron: `VIEW-NombreDeLaVista.md`
+Patrón: `VIEW-NombreDeLaVista.md`
 
 Ejemplos:
 - `VIEW-Auth.md`
-- `VIEW-Dashboard.md`
-- `VIEW-ProjectDetail.md`
+- `VIEW-Proyecto.md`
+- `VIEW-ConfigureProyecto.md`
 
 ## Frontmatter Requerido
 
@@ -42,30 +42,30 @@ storybook:
 # View: NombreVista
 
 ## Description
-Proposito de la vista. Que objetivo del usuario cumple?
+Propósito de la vista. ¿Qué objetivo del usuario cumple?
 
 ## Navigation Context
 - **Route**: `/path/to/view`
-- **Access from**: De donde llega el usuario
-- **Navigation to**: A donde puede ir
+- **Access from**: De dónde llega el usuario
+- **Navigation to**: A dónde puede ir
 
 ## Layout
 
 ### General Structure
 ```ascii
-+--------------------------------------+
-|              HEADER                   |
-+--------------------------------------+
-|                                       |
-|          MAIN CONTENT                 |
-|                                       |
-+--------------------------------------+
+┌──────────────────────────────────────┐
+│              HEADER                   │
+├──────────────────────────────────────┤
+│                                       │
+│          MAIN CONTENT                 │
+│                                       │
+└──────────────────────────────────────┘
 ```
 
 ### Responsive
-- **Desktop (>=1024px)**: Layout descripcion
-- **Tablet (768-1023px)**: Layout descripcion
-- **Mobile (<768px)**: Layout descripcion
+- **Desktop (≥1024px)**: Layout descripción
+- **Tablet (768-1023px)**: Layout descripción
+- **Mobile (<768px)**: Layout descripción
 
 ## Components
 | Component | Location | Main props |
@@ -100,17 +100,17 @@ Proposito de la vista. Que objetivo del usuario cumple?
 ### On Load
 1. Mostrar skeleton
 2. Fetch data
-3. If error -> error state
-4. If OK -> render
+3. If error → error state
+4. If OK → render
 
 ### Main Interactions
 | User Action | Result | Feedback |
 |-------------|--------|----------|
-| Click "Save" | Envia datos | Toast success/error |
+| Click "Save" | Envía datos | Toast success/error |
 
 ## Accessibility
 - **Initial focus**: Primer campo
-- **Tab order**: Header -> Content -> Actions
+- **Tab order**: Header → Content → Actions
 - **Keyboard shortcuts**: Ctrl+S = Save
 
 ## Related Use Cases
@@ -123,38 +123,38 @@ Proposito de la vista. Que objetivo del usuario cumple?
 
 ```ascii
 # Header con back
-+--------------------------------------+
-|  <- Back    Titulo                    |
-+--------------------------------------+
+┌──────────────────────────────────────┐
+│  ← Back    Título                     │
+├──────────────────────────────────────┤
 
 # Input field
-|   Label: [___________________________] |
+│   Label: [___________________________] │
 
 # Textarea
-|   +--------------------------------+  |
-|   |                                |  |
-|   +--------------------------------+  |
+│   ┌────────────────────────────────┐  │
+│   │                                │  │
+│   └────────────────────────────────┘  │
 
 # Buttons
-|   [Cancel]            [Primary Action] |
+│   [Cancel]            [Primary Action] │
 
 # Card
-|   +---------------------------------+ |
-|   |  Card content                   | |
-|   +---------------------------------+ |
+│   ┌─────────────────────────────────┐ │
+│   │  Card content                   │ │
+│   └─────────────────────────────────┘ │
 
 # Skeleton loading
-|   ████████████████████              |
+│   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓              │
 
 # Empty state
-|       (empty icon)                    |
-|       No hay elementos                |
-|       [Crear primero]                 |
+│       (empty icon)                    │
+│       No hay elementos                │
+│       [Crear primero]                 │
 ```
 
-## View States: Que Incluir
+## View States: Qué Incluir
 
-| Estado | Cuando | Contenido |
+| Estado | Cuándo | Contenido |
 |--------|--------|-----------|
 | Loading | Siempre | Skeleton que refleja estructura |
 | Empty | Si puede no haber datos | Mensaje + CTA |
@@ -174,33 +174,33 @@ links:
   components: [UI-ProyectoForm]
 ---
 
-# View: NewProject
+# View: NewProyecto
 
 ## Description
-Permite al [[Usuario]] crear un nuevo [[Proyecto]] ingresando titulo y descripcion.
+Permite al [[Usuario]] crear un nuevo [[Proyecto]] ingresando título y descripción.
 
 ## Navigation Context
 - **Route**: `/proyectos/nuevo`
-- **Access from**: Dashboard, boton "Nuevo Proyecto"
-- **Navigation to**: VIEW-ProjectDetail (on success)
+- **Access from**: Dashboard, botón "Nuevo Proyecto"
+- **Navigation to**: VIEW-ConfigureProyecto (on success)
 
 ## Layout
 
 ### General Structure
 ```ascii
-+--------------------------------------+
-|  <- Mis Proyectos    Nuevo Proyecto   |
-+--------------------------------------+
-|                                       |
-|  Titulo: [________________________]   |
-|                                       |
-|  Descripcion:                         |
-|  +--------------------------------+  |
-|  |                                |  |
-|  +--------------------------------+  |
-|                                       |
-|  [Cancelar]           [Crear Proyecto]|
-+--------------------------------------+
+┌──────────────────────────────────────┐
+│  ← Mis Proyectos    Nuevo Proyecto           │
+├──────────────────────────────────────┤
+│                                       │
+│  Título: [________________________]   │
+│                                       │
+│  Descripción:                         │
+│  ┌────────────────────────────────┐  │
+│  │                                │  │
+│  └────────────────────────────────┘  │
+│                                       │
+│  [Cancelar]           [Crear Proyecto]   │
+└──────────────────────────────────────┘
 ```
 
 ## Behavior
